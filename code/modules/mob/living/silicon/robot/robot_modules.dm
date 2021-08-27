@@ -395,12 +395,6 @@
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/sheet/glass/cyborg,
-		/obj/item/stack/sheet/rglass/cyborg,
-		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/stack/cable_coil/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
@@ -477,7 +471,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/gun/energy/laser/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/pinpointer/crew)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
@@ -838,152 +832,3 @@
 			return FALSE
 	return ..()
 
-/obj/item/robot_module/syndicate
-	name = "Syndicate Assault"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/extinguisher/mini,
-		/obj/item/crowbar/cyborg,
-		/obj/item/melee/transforming/energy/sword/cyborg,
-		/obj/item/gun/energy/printer,
-		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
-		/obj/item/card/emag,
-		/obj/item/crowbar/cyborg,
-		/obj/item/pinpointer/syndicate_cyborg)
-
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "synd_sec"
-	moduleselect_icon = "malf"
-	hat_offset = 3
-
-/obj/item/robot_module/syndicate/rebuild_modules()
-	..()
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction  -= "silicon" //ai turrets
-
-/obj/item/robot_module/syndicate/remove_module(obj/item/I, delete_after)
-	..()
-	var/mob/living/silicon/robot/Syndi = loc
-	Syndi.faction += "silicon" //ai is your bff now!
-
-/obj/item/robot_module/syndicate_medical
-	name = "Syndicate Medical"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/extinguisher/mini,
-		/obj/item/crowbar/cyborg,
-		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/shockpaddles/syndicate,
-		/obj/item/healthanalyzer/advanced,
-		/obj/item/surgical_drapes/advanced,
-		/obj/item/retractor,
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/bonesetter,
-		/obj/item/stack/medical/bone_gel,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw,
-		/obj/item/roller/robo,
-		/obj/item/card/emag,
-		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/gun/medbeam,
-		/obj/item/organ_storage)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "synd_medical"
-	moduleselect_icon = "malf"
-	hat_offset = 3
-
-/obj/item/robot_module/saboteur
-	name = "Syndicate Saboteur"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/thermal,
-		/obj/item/construction/rcd/borg/syndicate,
-		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/extinguisher,
-		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
-		/obj/item/storage/part_replacer/cyborg,
-		/obj/item/holosign_creator/atmos,
-		/obj/item/weapon/gripper,
-		/obj/item/lightreplacer/cyborg,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/sheet/glass/cyborg,
-		/obj/item/stack/sheet/rglass/cyborg,
-		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/destTagger/borg,
-		/obj/item/stack/cable_coil/cyborg,
-		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/borg_chameleon,
-		)
-
-	ratvar_modules = list(
-	/obj/item/clockwork/slab/cyborg/engineer,
-	/obj/item/clockwork/replica_fabricator/cyborg)
-
-	cyborg_base_icon = "synd_engi"
-	moduleselect_icon = "malf"
-	magpulsing = TRUE
-	hat_offset = -4
-	canDispose = TRUE
-
-/datum/robot_energy_storage
-	var/name = "Generic energy storage"
-	var/max_energy = 30000
-	var/recharge_rate = 1000
-	var/energy
-
-/datum/robot_energy_storage/New(obj/item/robot_module/R = null)
-	energy = max_energy
-	if(R)
-		R.storages |= src
-	return
-
-/datum/robot_energy_storage/proc/use_charge(amount)
-	if (energy >= amount)
-		energy -= amount
-		if (energy == 0)
-			return 1
-		return 2
-	else
-		return 0
-
-/datum/robot_energy_storage/proc/add_charge(amount)
-	energy = min(energy + amount, max_energy)
-
-/datum/robot_energy_storage/metal
-	name = "Metal Synthesizer"
-
-/datum/robot_energy_storage/glass
-	name = "Glass Synthesizer"
-
-/datum/robot_energy_storage/wire
-	max_energy = 50
-	recharge_rate = 2
-	name = "Wire Synthesizer"
-
-/datum/robot_energy_storage/medical
-	max_energy = 2500
-	recharge_rate = 250
-	name = "Medical Synthesizer"
-
-/datum/robot_energy_storage/beacon
-	max_energy = 30
-	recharge_rate = 1
-	name = "Marker Beacon Storage"
-
-/datum/robot_energy_storage/wrapping_paper
-	max_energy = 30
-	recharge_rate = 1
-	name = "Wrapping Paper Storage"
