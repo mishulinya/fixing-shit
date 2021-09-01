@@ -10,6 +10,28 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+	/datum/quirk/horrifying_tastes
+	name = "Horrifying Tastes"
+	desc = "You enjoy a fine sort of meal not often appreciated by your peers. To serve man, in all it's forms is your life's work. Put bluntly - you are a cannibal. Consuming human flesh doesn't bother you, and dishes such as longpork stew will heal you."
+	mob_trait = TRAIT_LONGPORKLOVER
+	value = 0
+	gain_text = "<span class='notice'>You have an insatiable hunger for the flesh of your fellow man.</span>"
+	lose_text = "<span class='notice'>The terrible hunger fades - you feel peace at last.</span>"
+	medical_record_text = "Patient refuses to comment on their dietary preferences."
+
+	/datum/quirk/horrifying_tastes/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.liked_food |= LONGPORK
+	species.disliked_food &= ~LONGPORK
+
+/datum/quirk/horrifying_tastes/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.liked_food &= ~LONGPORK
+		species.disliked_food |= LONGPORK
+
 /datum/quirk/snob
 	name = "Snob"
 	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
