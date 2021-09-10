@@ -350,29 +350,7 @@
 
 
 
-/datum/plant_gene/trait/teleport
-	// Makes plant teleport people when squashed or slipped on.
-	// Teleport radius is calculated as max(round(potency*rate), 1)
-	name = "Bluespace Activity"
-	rate = 0.1
-
-/datum/plant_gene/trait/teleport/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	if(isliving(target))
-		var/teleport_radius = max(round(G.seed.potency / 10), 1)
-		var/turf/T = get_turf(target)
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-
-/datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
-	var/teleport_radius = max(round(G.seed.potency / 10), 1)
-	var/turf/T = get_turf(C)
-	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
-	do_teleport(C, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-	if(prob(50))
-		do_teleport(G, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-	else
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		qdel(G)
+// Bluespace mutation was here and removed.
 
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
