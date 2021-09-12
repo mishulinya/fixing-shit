@@ -160,6 +160,7 @@
 	key = "giggle"
 	key_third_person = "giggles"
 	message = "giggles."
+	message_mime = "giggles silently!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/glare
@@ -178,6 +179,7 @@
 	key = "groan"
 	key_third_person = "groans"
 	message = "groans!"
+	message_mime = "appears to groan!"
 
 /datum/emote/living/grimace
 	key = "grimace"
@@ -210,6 +212,7 @@
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
+	message_mime = "laughs silently!"
 
 /datum/emote/living/audio_emote/laugh/run_emote(mob/user, params)
 	. = ..()
@@ -249,6 +252,7 @@
 	key = "chitter"
 	key_third_person = "chitters"
 	message = "chitters."
+	message_mime = "chitters silently!"
 
 /datum/emote/living/audio_emote/chitter/run_emote(mob/user, params)
 	. = ..()
@@ -299,6 +303,7 @@
 	key = "scream"
 	key_third_person = "screams"
 	message = "screams."
+	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/scowl
@@ -361,6 +366,7 @@
 	key = "snore"
 	key_third_person = "snores"
 	message = "snores."
+	message_mime = "sleeps soundly."
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 
@@ -385,12 +391,16 @@
 	key_third_person = "surrenders"
 	message = "puts their hands on their head and falls to the ground, they surrender!"
 	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+	restraint_check = FALSE
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
-		L.DefaultCombatKnockdown(200)
+		L.Knockdown(200)
+		L.Paralyze(200)
+		playsound(L, 'sound/f13effects/surrender1.ogg', 80, 1)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -420,6 +430,7 @@
 	key = "whimper"
 	key_third_person = "whimpers"
 	message = "whimpers."
+	message_mime = "appears hurt."
 
 /datum/emote/living/wsmile
 	key = "wsmile"
@@ -580,3 +591,4 @@
 	if(. && isliving(user))
 		var/mob/living/L = user
 		L.Knockdown(200)
+
